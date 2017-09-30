@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=CarDatabase
+comment1.params=car
+comment1.target=boolean\ addcar(Car)
+comment1.text=public\ CarDatebase()\r\n\ \ \ {\r\n\ \ \ \ \ \ carlist\ \=\ new\ ArrayList<Car>();\r\n}
+comment2.params=index
+comment2.target=Car\ getCar(int)
+comment3.params=
+comment3.target=java.util.ArrayList\ getCars()
+comment4.params=
+comment4.target=void\ displayallcars()
+numComments=5

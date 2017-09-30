@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=ListOfColours
+comment1.params=
+comment1.target=ListOfColours()
+comment2.params=
+comment2.target=java.lang.String\ getStringOfListOfColours()
+comment3.params=newColourlist
+comment3.target=void\ setListOfColours(java.util.ArrayList)
+numComments=4
