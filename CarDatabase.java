@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class CarDatabase
 {
@@ -9,17 +10,48 @@ public class CarDatabase
       carlist = new ArrayList<Car>();
    }*/
    
-   public boolean addcar (Car car)
+   public boolean addcar (Car newcar)
    {
-       if (car != null)
+       if (newcar != null)
        {
-           carlist.add(car);
+           carlist.add(newcar);
            return true;
         }
        return false;
        
    }
    
+   public void delecar(String delCarname)
+   {
+       boolean isdeleted = false;
+       for (int i = 0; i < getnumberofcars() ; i++)
+       {
+           if(getCars().get(i).getcarreg().equals(delCarname))
+           {
+               System.out.println(getCars().get(i).getcarreg() + "are deleted.");
+               getCars().remove(i);
+               isdeleted = true;
+            
+            }
+        
+        }
+       if (! isdeleted)
+       {
+            System.out.println(" No matched cars are deleted."); 
+       }
+    }
+   
+   public int getnumberofcars()
+   {
+       return carlist.size();
+    
+   }
+   
+   public void setCar(Car insertedCar, int index)
+   {
+        carlist.set(index, insertedCar);
+    }
+    
    public Car getCar(int index)
    {
        return carlist.get(index);
@@ -30,6 +62,17 @@ public class CarDatabase
        return carlist;
    }
    
+   public boolean validcarname(String carname)
+   {
+       //check if car is not in database , and return false to break while loop
+       for (int i =0; i <getnumberofcars(); i++)
+       {
+        if (carname.equals(getCars().get(i).getcarreg()))
+        return true;
+        }
+        
+        return false;
+   }
    public void displayallcars()
    {
        for (Car car : carlist)

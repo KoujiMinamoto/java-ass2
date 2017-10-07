@@ -1,5 +1,17 @@
 #BlueJ class context
 comment0.target=Test
 comment1.params=
-comment1.target=void\ runtest()
-numComments=2
+comment1.target=Test()
+comment2.params=
+comment2.target=void\ runtest()
+comment3.params=
+comment3.target=void\ run()
+comment4.params=
+comment4.target=void\ addcar()
+comment5.params=input
+comment5.target=int\ convertStringtoInt(java.lang.String)
+comment6.params=carname
+comment6.target=boolean\ validcarname(java.lang.String)
+comment7.params=iobuffer\ subject
+comment7.target=boolean\ validBlank(java.lang.String,\ java.lang.String)
+numComments=8

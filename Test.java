@@ -3,6 +3,14 @@ import java.util.*;
 import java.io.*;
 public class Test
 {
+  Car car = new Car();
+  private CarDatabase newcarlist;
+  
+  public Test()
+  {
+    newcarlist = new CarDatabase();
+    
+  }
   public void runtest()
   {
      Car car = new Car();
@@ -10,6 +18,138 @@ public class Test
      
      System.out.println(car);
   }
+  
+  public void run()
+  {
+    car.displaymenu();
+      
+      
+      
+      
+   }
+   
+   private void addcar()
+  {
+    Scanner input = new Scanner(System.in);
+    System.out.println("=== Add Car ===");
+    System.out.println("Please insert car registration number :");        
+    String newcarname = input.nextLine();
+    
+    while (validcarname(newcarname))
+    newcarname = input.nextLine();
+    while (validBlank(newcarname,"car name"))
+    {
+        newcarname = input.nextLine();
+        while (validcarname(newcarname))
+        newcarname = input.nextLine();
+    
+    }
+    
+    System.out.println("Please insert car make");
+    String newcarmake = input.nextLine();
+    while (validBlank(newcarmake,"car make"))
+    newcarmake = input.nextLine();
+    
+    System.out.println("Please insert car model");
+    String newcarmodel = input.nextLine();
+    while (validBlank(newcarmodel,"car model"))
+    newcarmodel = input.nextLine();
+    
+    System.out.println("Please insert car colour1");
+    String newcarcolour1 = input.nextLine();
+    while (validBlank(newcarcolour1,"car colour1"))
+    newcarcolour1 = input.nextLine();
+    
+    System.out.println("Please insert car colour2, if havent canbe blank");
+    String newcarcolour2 = input.nextLine(); 
+    newcarcolour2 = input.nextLine();
+     
+    System.out.println("Please insert car colour3, if havent canbe blank");
+    String newcarcolour3 = input.nextLine();
+    newcarcolour3 = input.nextLine();
+    
+    
+    System.out.println("Please insert car yearmade");
+    String newcaryearmade = input.nextLine();
+    while (validBlank(newcaryearmade,"car yearmade"))
+    newcaryearmade = input.nextLine();
+    int newcaryearmadeint = convertStringtoInt(newcaryearmade);
+    
+    System.out.println("Please insert car price");
+    String newcarprice = input.nextLine();
+    while (validBlank(newcarprice,"car price"))
+    newcarprice = input.nextLine();
+    int newcarpriceint = convertStringtoInt(newcarprice);
+    
+    car.setcarreg(newcarname);
+    car.setcarmake(newcarmake);
+    car.setcarmodel(newcarmodel);
+    car.setcolour1(newcarcolour1);
+    car.setcolour2(newcarcolour2);
+    car.setcolour3(newcarcolour3);
+    car.setprice(newcarpriceint);
+    car.setyearmade(newcaryearmadeint);
+    newcarlist.addcar(car);
+    
+   }
+    
+   private int convertStringtoInt(String input) //method to convert String to Integer
+    {
+        //intialised variables
+        String S = input;
+        int i = 0;
+        //try catch to handle NumberFormatException
+        try
+        {
+            // the String to int conversion happens here
+            i = Integer.parseInt(input.trim());
+
+            // print out the value after the conversion
+            //System.out.println("int i = " + i);
+        }
+        catch (NumberFormatException nfe)
+        {
+            System.out.println("NumberFormatException: " + nfe.getMessage() + ", please input an integer!");
+        }
+        return i;
+    }
+     public boolean validcarname(String carname)
+   {
+       //check if car is not in database , and return false to break while loop
+       boolean isrepeated = newcarlist.validcarname(carname);
+       if (isrepeated)
+       {
+        System.out.println("Error : car name existed , please insert another car registration number!");
+        return isrepeated;
+        
+        }
+        
+        return false;
+   }
+   
+    private boolean validBlank(String iobuffer,String subject) //method to check insert any empties or blanks
+    {
+        if (subject.equals("Option"))
+        {
+            //if iobuffer isEmpty or iobuffer.length() > 1 , Error : please insert from (1) to (5)! and return false to break if condition
+            if (iobuffer.isEmpty() || iobuffer.length() > 1)
+            {
+                System.out.println("Error : please insert from (1) to (6)!");
+                return false;
+            }
+            return true;
+        }
+        else
+        {    
+            //iobuffer.trim().isEmpty(), "Error: subject's name shouldn't be blank! Please enter the name again:" and return true to keep while condition
+            if (iobuffer.trim().isEmpty())
+            {
+                System.out.println("Error: " + subject + " shouldn't be blank! Please enter the name again:");
+                return true;
+            }
+        }
+        return false;
+    }
   /*
   private void readFile()
     {
