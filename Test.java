@@ -29,7 +29,7 @@ public class Test
   }
   public void run()
   {
-    
+    readFile();
     boolean exit = false;
        while (!exit)
        {
@@ -40,7 +40,8 @@ public class Test
                         break;
                 case 3: deletecar();
                         break;
-                case 4: exit = true;
+                case 4: writeFile();
+                        exit = true;
                         System.out.println("Goodbye. ");
                         break;
         
@@ -215,13 +216,13 @@ public class Test
         }
         return false;
     }
-  /*
+  
   private void readFile()
     {
         String filename = ("cars.txt");
         String cars;
         Car loadFromFile;
-        // try catch to handle FileNotFoundException and IOException
+        
         try
         {
             FileReader inputFile = new FileReader(filename);
@@ -248,40 +249,20 @@ public class Test
                 loadFromFile.setcarreg(attribute[0]);
                 loadFromFile.setcarmake(attribute[1]);
                 loadFromFile.setcarmodel(attribute[2]);
-                loadFromFile.setyearmade(attribute[3]);
-                loadFromFile.setprice(attribute[4]);
+                loadFromFile.setcolour1(attribute[3]); 
+                loadFromFile.setcolour2(attribute[4]);
+                loadFromFile.setcolour3(attribute[5]);
+                loadFromFile.setyearmade(convertStringtoInt(attribute[6]));
+                loadFromFile.setprice(convertStringtoInt(attribute[7]));
                 
                 //add movie to the list
                 Car newCar = new Car(); 
-                ListOfColours newColourList = new ListOfColours();
-                //handle String
-                ArrayList<String> loadFromFileColourStringList = new ArrayList<String>();
+
                 
-                //for loop to handle attribute[2] - attribute[4] 
-                for (int i = 0 ; i < (attribute.length - 3) ; i++) 
-                {
-                    loadFromFileColourStringList.add(attribute[ i + 2 ]);
-                    //String newActor2Name = attribute[3];
-                    //String newActor3Name = attribute[4];
-                }
-               
-                //actor list (using for loop to handle it)
-                ArrayList<Colours> loadFromFileColourList = new ArrayList<Colours>();
-                for (int i = 0 ; i < loadFromFileColourStringList.size() ; i++)
-                {
-                    Colours colour = new Colours();
-                    //using loadFromFileActorStringList.get(i) to replace newActorName
-                    colour.setName(loadFromFileColourStringList.get(i)); 
-                    loadFromFileColourList.add(colour);
-                }
-               /* loadFromFile.cleanListOfColours();
-                loadFromFile.setColourList(loadFromFileColourList);                               
-                                
-                //use movie.getNumbersOfElement() to replace 6, 6 - 1 = 5
-                loadFromFile.setRating(convertStringtoInt(attribute[ loadFromFile.getNumbersOfElements() - 1 ]));
-                //loadFromFile.displayMovieRecord();
-                loadFromFile.displayCarRecord();
-                newCarList.addCar(loadFromFile);
+
+
+                loadFromFile.displaycarrecord();
+                newcarlist.addcar(loadFromFile);
                 linecount++; 
             }
             inputFile.close();
@@ -295,6 +276,50 @@ public class Test
             System.out.println("Unexpected I/O error occured");
         }
     }
-*/
-  
+
+  private void writeFile()
+    {
+        String filename = ("cars.txt");
+        //use movie.getNumbersOfElement() to replace 6
+        String[] cars = new String[8];
+        Scanner input = new Scanner(System.in);
+        CarDatabase toWriteCarList = new CarDatabase();
+        int numberofcars;
+        String line = "";
+        numberofcars = newcarlist.getnumberofcars();
+        //try catch to handle IOException
+        try
+        {
+            PrintWriter outputFile = new PrintWriter (filename);
+            
+            for (int i = 0 ; i < numberofcars ; i++ )
+            {
+            cars[0] = newcarlist.getCars().get(i).getcarreg();
+            cars[1] = newcarlist.getCars().get(i).getcarmake();
+            cars[2] = newcarlist.getCars().get(i).getcarmodel();
+            cars[3] = newcarlist.getCars().get(i).getc1();
+            cars[4] = newcarlist.getCars().get(i).getc2();
+            cars[5] = newcarlist.getCars().get(i).getc3();
+            cars[6] = newcarlist.getCars().get(i).getyearmade()+ ""; 
+            cars[7] = newcarlist.getCars().get(i).getprice() + ""; 
+           
+            for (int k = 0 ; k < 8 ; k++ )
+                {   
+                    //line = cars[0] + "," + cars[1] + "," + .....;
+                    if (k != 7)
+                        line = line + cars[k] + ",";
+                    else
+                        line = line + cars[k];
+                }
+            
+              
+           
+            }
+            outputFile.close();    
+        }
+        catch(IOException exception)
+        {
+            System.out.println("Unexpected I/O error occured");
+        }
+    }
 }

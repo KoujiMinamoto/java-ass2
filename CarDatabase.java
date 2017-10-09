@@ -6,10 +6,10 @@ public class CarDatabase
    private ArrayList<Car> carlist;
    
    
-   /*public CarDatebase()
+   public CarDatabase()
    {
       carlist = new ArrayList<Car>();
-   }*/
+   }
    
    public boolean addcar (Car newcar)
    {
@@ -79,7 +79,7 @@ public class CarDatabase
    public boolean validcarname(String carname)
    {
        //check if car is not in database , and return false to break while loop
-       for (int i =0; i <getnumberofcars(); i++)
+       for (int i =0; i < getnumberofcars(); i++)
        {
         if (carname.equals(getCars().get(i).getcarreg()))
         return true;

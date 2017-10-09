@@ -1,8 +1,8 @@
 #BlueJ class context
-comment0.target=CarDatabase
+comment0.params=
+comment0.target=CarDatabase()
 comment1.params=newcar
 comment1.target=boolean\ addcar(Car)
-comment1.text=public\ CarDatebase()\r\n\ \ \ {\r\n\ \ \ \ \ \ carlist\ \=\ new\ ArrayList<Car>();\r\n}
 comment2.params=delCarname
 comment2.target=void\ deletecar(java.lang.String)
 comment3.params=searchthing
