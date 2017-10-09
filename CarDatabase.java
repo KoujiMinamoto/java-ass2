@@ -5,6 +5,7 @@ public class CarDatabase
 {
    private ArrayList<Car> carlist;
    
+   
    /*public CarDatebase()
    {
       carlist = new ArrayList<Car>();
@@ -21,7 +22,7 @@ public class CarDatabase
        
    }
    
-   public void delecar(String delCarname)
+   public void deletecar(String delCarname)
    {
        boolean isdeleted = false;
        for (int i = 0; i < getnumberofcars() ; i++)
@@ -41,8 +42,21 @@ public class CarDatabase
        }
     }
    
+   public ArrayList<Car> searchcar (String searchthing)
+   {
+       ArrayList<Car> resultlist = new ArrayList<Car>();
+       for (int i = 0; i < getnumberofcars() ; i++)
+       {
+           if(getCars().get(i).getcarreg().toLowerCase().contains(searchthing))
+           resultlist.add(getCars().get(i));
+        
+       }
+       return resultlist;
+    
+   }
    public int getnumberofcars()
    {
+       
        return carlist.size();
     
    }

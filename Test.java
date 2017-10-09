@@ -18,10 +18,36 @@ public class Test
      
      System.out.println(car);
   }
-  
+  public int getChoice()
+  {
+       Scanner choiceScanner = new Scanner(System.in);
+       int choice;
+       car.displaymenu();
+       choice = choiceScanner.nextInt();
+       return choice;
+       
+  }
   public void run()
   {
-    car.displaymenu();
+    
+    boolean exit = false;
+       while (!exit)
+       {
+           switch(getChoice())
+           {
+                case 1: 
+                case 2: addcar();
+                        break;
+                case 3: deletecar();
+                        break;
+                case 4: exit = true;
+                        System.out.println("Goodbye. ");
+                        break;
+        
+               
+            }
+            
+       } 
       
       
       
@@ -92,6 +118,45 @@ public class Test
     newcarlist.addcar(car);
     
    }
+   
+   private void deletecar()
+   {
+       System.out.println("delete car: ");
+       Scanner input = new Scanner(System.in);
+       System.out.println("=== Search Car to delete : ===");
+       System.out.println("Search Car , please insert registration number:");
+       String deletecar = input.nextLine().toLowerCase();
+       
+       //判断是否在表中，先不写了
+       
+       
+       newcarlist.deletecar(deletecar);
+       
+       
+    
+    
+    }
+    
+    private void search()
+    {
+        Scanner input = new Scanner(System.in);
+        System.out.println("enter something");
+        String newcar = input.nextLine().toLowerCase();
+        while(validBlank(newcar,"Movie Name"))
+            newcar = input.nextLine().toLowerCase();
+        ArrayList<Car> resultList = newcarlist.searchcar(newcar);
+        //display car details
+        System.out.println("Search Result");
+        for (int j = 0 ; j < resultList.size() ; j++)
+        {
+            resultList.get(j).displaycarrecord();
+        }
+
+        if (resultList.size() == 0)
+            System.out.println("No matched result");
+    
+    }
+    
     
    private int convertStringtoInt(String input) //method to convert String to Integer
     {

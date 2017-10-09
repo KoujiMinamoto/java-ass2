@@ -42,7 +42,18 @@ public class Car
        
    }
   
-   
+   public void displaycarrecord()
+    {
+        //method to test displaying attributes of the movie
+        System.out.print(carreg + ",");
+        System.out.print(carmake + ",");
+        System.out.print(carmodel + ",");
+        System.out.print(colour1 + ",");
+        System.out.print(colour2 + ",");
+        System.out.print(colour3 + ",");
+        System.out.print(yearmade + ",");
+        System.out.println(price + ",");
+    }
    public String getcarreg()
    {
        return carreg;  
