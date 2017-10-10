@@ -89,10 +89,12 @@ public class Test
     
     System.out.println("Please insert car colour2, if havent canbe blank");
     String newcarcolour2 = input.nextLine(); 
+    while (validBlank(newcarcolour2,"car colour2"))
     newcarcolour2 = input.nextLine();
      
     System.out.println("Please insert car colour3, if havent canbe blank");
     String newcarcolour3 = input.nextLine();
+    while (validBlank(newcarcolour3,"car colour3"))
     newcarcolour3 = input.nextLine();
     
     
@@ -280,7 +282,6 @@ public class Test
   private void writeFile()
     {
         String filename = ("cars.txt");
-        //use movie.getNumbersOfElement() to replace 6
         String[] cars = new String[8];
         Scanner input = new Scanner(System.in);
         CarDatabase toWriteCarList = new CarDatabase();
@@ -311,7 +312,9 @@ public class Test
                     else
                         line = line + cars[k];
                 }
-            
+            outputFile.println(line);
+            //reset line
+            line = "";
               
            
             }
