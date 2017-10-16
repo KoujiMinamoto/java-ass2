@@ -6,6 +6,31 @@ public class Test
   Car car = new Car();
   private CarDatabase newcarlist;
   
+     public void displaymenu()
+   {
+        System.out.println("Used Car Warehouse Database System");
+        System.out.println("====================================");
+        System.out.println("(1) Search Cars");
+        System.out.println("(2) Add Car");
+        System.out.println("(3) Delete Car");
+        System.out.println("(4) Edit Car");
+        System.out.println("(5) Exit System");
+        System.out.println("====================================");
+        System.out.println("Choose an option:");
+   }
+   
+   public void displaymenu2()
+   {
+        System.out.println("Car Searching Options:");
+        System.out.println("====================================");
+        System.out.println("(1) By Registration Number");
+        System.out.println("(2) By Car Make and Car Model");
+        System.out.println("(3) By Age");
+        System.out.println("(4) By Price (range)");
+        System.out.println("(5) Back to Main Menu");
+        System.out.println("====================================");
+        System.out.println("Choose an option:");
+   }
   public Test()
   {
     newcarlist = new CarDatabase();
@@ -18,29 +43,68 @@ public class Test
      
      System.out.println(car);
   }
-  public int getChoice()
+  
+  /*public int getChoice()
   {
        Scanner choiceScanner = new Scanner(System.in);
        int choice;
-       car.displaymenu();
+       displaymenu();
        choice = choiceScanner.nextInt();
        return choice;
        
   }
+  
+  public int getChoice2()
+  {
+       Scanner choiceScanner = new Scanner(System.in);
+       int choice;
+       displaymenu();
+       choice = choiceScanner.nextInt();
+       return choice;
+       
+  }
+  */
+  private boolean validOption(char option) //method to check char option
+    {
+        
+        if (option < '1' || option > '5')
+        {
+            System.out.println("Error : please insert from 1 to 5!");
+            return false;
+        }
+        return true;        
+    }
+    
   public void run()
   {
+    Car car = new Car();
     readFile();
     boolean exit = false;
+    Scanner input = new Scanner(System.in);
        while (!exit)
        {
-           switch(getChoice())
+            displaymenu();
+
+            //insert case
+            String iobuffer = input.nextLine(); 
+            System.out.println("");
+            
+         if (validBlank(iobuffer,"Option"))
+         { 
+           char option = iobuffer.charAt(0);
+          if (validOption(option))
+          {
+           switch(option)
            {
-                case 1: 
-                case 2: addcar();
+                case '1': searchcar();
                         break;
-                case 3: deletecar();
+                case '2': addcar();
                         break;
-                case 4: writeFile();
+                case '3': deletecar();
+                        break;
+                case '4': editcar();
+                         break;
+                case '5': writeFile();
                         exit = true;
                         System.out.println("Goodbye. ");
                         break;
@@ -50,10 +114,11 @@ public class Test
             
        } 
       
-      
+    }
       
       
    }
+}
    
    private void addcar()
   {
@@ -89,12 +154,12 @@ public class Test
     
     System.out.println("Please insert car colour2, if havent canbe blank");
     String newcarcolour2 = input.nextLine(); 
-    while (validBlank(newcarcolour2,"car colour2"))
+    while (validSpace(newcarcolour2))
     newcarcolour2 = input.nextLine();
      
     System.out.println("Please insert car colour3, if havent canbe blank");
     String newcarcolour3 = input.nextLine();
-    while (validBlank(newcarcolour3,"car colour3"))
+    while (validSpace(newcarcolour3))
     newcarcolour3 = input.nextLine();
     
     
@@ -129,23 +194,34 @@ public class Test
        System.out.println("=== Search Car to delete : ===");
        System.out.println("Search Car , please insert registration number:");
        String deletecar = input.nextLine().toLowerCase();
-       
+       while (validBlank(deletecar,"registration number"))
+            deletecar = input.nextLine().toLowerCase();
+       ArrayList<Car> delResultList = newcarlist.searchcar(deletecar);
+       int size = delResultList.size();
        //判断是否在表中，先不写了
-       
-       
-       newcarlist.deletecar(deletecar);
-       
-       
-    
-    
+       if (size != 0)
+        {
+ 
+            newcarlist.deletecar(deletecar);
+        }
+        else
+            System.out.println("No matched cars");
     }
+       
+       
+       
+       
     
-    private void search()
+    
+    
+    
+    
+    private void searchcar()
     {
         Scanner input = new Scanner(System.in);
         System.out.println("enter something");
         String newcar = input.nextLine().toLowerCase();
-        while(validBlank(newcar,"Movie Name"))
+        while(validBlank(newcar,"Car reg"))
             newcar = input.nextLine().toLowerCase();
         ArrayList<Car> resultList = newcarlist.searchcar(newcar);
         //display car details
@@ -160,6 +236,124 @@ public class Test
     
     }
     
+        private void editcar()
+    {
+        System.out.println("Edit Car :");        
+        //input
+        Scanner input = new Scanner(System.in);
+
+        //search by title
+        System.out.println("=== Search Car to edit : ===");
+        System.out.println("Search Car , please insert registration number:");
+
+        String editKeyword = input.nextLine().toLowerCase();
+
+        while (validBlank(editKeyword,"Title keyword"))
+            editKeyword = input.nextLine().toLowerCase();
+
+        ArrayList<Car> editResultList = newcarlist.searchcar(editKeyword);
+
+        //display Movie details
+        System.out.println("Search Result");
+        for (int j = 0 ; j < editResultList.size() ; j++)
+        {
+            System.out.print( (j + 1) + ") ");
+            editResultList.get(j).displaycarrecord();
+        }
+
+        int size = editResultList.size();
+
+        //selection
+        if (size != 0)
+        {
+            System.out.println("Please insert which option number you would select to delete, press 0 to quit :");
+            String editcarselection = input.nextLine();
+            int index = convertStringtoInt(editcarselection);
+
+            if (index == 0)
+                size = 0;
+            //validDelSelection (index, delresultList.size());
+          while (validDelSelection (index, size))
+            {
+             editcarselection = input.nextLine();
+             index = convertStringtoInt(editcarselection);
+             if (index == 0)
+                    size = 0;
+          
+             while (validBlank(editcarselection,"Selection"))
+                {    
+                    editcarselection = input.nextLine();
+                    index = convertStringtoInt(editcarselection);
+                    if (index == 0)
+                        size = 0;
+                }
+            }
+            System.out.println(editcarselection);
+
+            String editcarname;
+
+            if (size != 0)
+                editcarname = editResultList.get(index - 1).getcarreg();
+            else
+                editcarname = "";
+
+            if (size !=0)
+            {
+                System.out.println("==== Edit Car ====");
+
+                System.out.println("Please insert colour1 :");        
+                //input Actor1's name
+                String newcolour1 = input.nextLine();
+
+                while (validBlank(newcolour1,"colour1"))
+                    newcolour1 = input.nextLine();
+
+                System.out.println("Please insert colour2:");    
+                //input Actor2's name
+                String newcolour2 = input.nextLine();
+
+                while (validSpace(newcolour2))
+                    newcolour2 = input.nextLine();
+
+                System.out.println("Please insert colour3:");
+                //input Actor3's name
+                String newcolour3 = input.nextLine();
+
+                while (validSpace(newcolour3))
+                    newcolour3 = input.nextLine();
+
+                System.out.println("Please insert price :");
+                //input
+                String newprice = input.nextLine();
+
+                while (validBlank(newprice,"new price"))
+                    newprice = input.nextLine();
+
+                //Convert String newRating to int newRatingInt
+                int newpriceInt = convertStringtoInt(newprice);
+
+                //validRating(int rating)
+               
+                newprice = input.nextLine();
+
+                while(validBlank(newprice,"new price"))
+                newprice = input.nextLine();
+
+                newpriceInt = convertStringtoInt(newprice);
+               
+
+            
+                int editprice = newpriceInt;
+                String editcolour1 = newcolour1;
+                String editcolour2 = newcolour2;  
+                String editcolour3 = newcolour3;  
+                newcarlist.editcar(editcarname,editcolour1,editcolour2,editcolour3,editprice);
+               
+            }
+        }
+        else
+            System.out.println("No matched movies");
+    }
     
    private int convertStringtoInt(String input) //method to convert String to Integer
     {
@@ -202,7 +396,7 @@ public class Test
             //if iobuffer isEmpty or iobuffer.length() > 1 , Error : please insert from (1) to (5)! and return false to break if condition
             if (iobuffer.isEmpty() || iobuffer.length() > 1)
             {
-                System.out.println("Error : please insert from (1) to (6)!");
+                System.out.println("Error : please insert from 1 to 5!");
                 return false;
             }
             return true;
@@ -279,6 +473,31 @@ public class Test
         }
     }
 
+    private boolean validSpace(String iobuffer) 
+    {
+        
+        if (iobuffer.isEmpty())
+            return false;
+        else if (iobuffer.charAt(0) == ' ')
+        {
+            System.out.println("Error: colour1 or colour2's name shouldn't be space only or start by space character! Please enter the name again:");
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean validDelSelection(int index, int size) //method to check int index
+    {
+        //check if rating is from 1 to size  and return false to break while loop
+        if (index < 0 || index > size)
+        {
+            System.out.println("Error : please insert from (1) to (" + size +")!");
+            System.out.print("Please insert :");
+            return true;
+        }
+        return false;
+    }
+    
   private void writeFile()
     {
         String filename = ("cars.txt");

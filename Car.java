@@ -4,30 +4,7 @@ public class Car
    private String carreg, carmake, carmodel, colour1, colour2, colour3;
    private int yearmade, price;
    
-   public void displaymenu()
-   {
-        System.out.println("Used Car Warehouse Database System");
-        System.out.println("====================================");
-        System.out.println("(1) Search Cars");
-        System.out.println("(2) Add Car");
-        System.out.println("(3) Delete Car");
-        System.out.println("(4) Exit System");
-        System.out.println("====================================");
-        System.out.println("Choose an option:");
-   }
-   
-   public void displaymenu2()
-   {
-        System.out.println("Car Searching Options:");
-        System.out.println("====================================");
-        System.out.println("(1) By Registration Number");
-        System.out.println("(2) By Car Make and Car Model");
-        System.out.println("(3) By Age");
-        System.out.println("(4) By Price (range)");
-        System.out.println("(5) Back to Main Menu");
-        System.out.println("====================================");
-        System.out.println("Choose an option:");
-   }
+
    
    public Car()
    {

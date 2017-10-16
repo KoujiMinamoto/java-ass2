@@ -54,6 +54,30 @@ public class CarDatabase
        return resultlist;
     
    }
+   
+   public void editcar(String editcar, String editcolour1 , String editcolour2 ,String editcolour3 ,  int editprice)
+    {        
+        //set()
+        boolean isEdited = false;
+        for (int i = 0 ; i < getnumberofcars() ; i++)
+        {
+            if(getCars().get(i).getcarreg().equals(editcar))
+            {
+                System.out.println(getCars().get(i).getcarreg() + " are edited.");
+                getCars().get(i).setcolour1(editcolour1);
+                getCars().get(i).setcolour2(editcolour2);
+                getCars().get(i).setcolour3(editcolour3);
+                getCars().get(i).setprice(editprice);
+               
+                isEdited = true;
+            }                        
+        }        
+        if (! isEdited)
+        {
+            System.out.println(" No matched movies are Edited."); 
+        }
+    }
+    
    public int getnumberofcars()
    {
        
