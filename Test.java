@@ -31,39 +31,14 @@ public class Test
         System.out.println("====================================");
         System.out.println("Choose an option:");
    }
+   
   public Test()
   {
     newcarlist = new CarDatabase();
     
   }
-  public void runtest()
-  {
-     Car car = new Car();
-     car.setcarreg("abc113");
-     
-     System.out.println(car);
-  }
-  
-  /*public int getChoice()
-  {
-       Scanner choiceScanner = new Scanner(System.in);
-       int choice;
-       displaymenu();
-       choice = choiceScanner.nextInt();
-       return choice;
-       
-  }
-  
-  public int getChoice2()
-  {
-       Scanner choiceScanner = new Scanner(System.in);
-       int choice;
-       displaymenu();
-       choice = choiceScanner.nextInt();
-       return choice;
-       
-  }
-  */
+
+
   private boolean validOption(char option) //method to check char option
     {
         
@@ -96,7 +71,7 @@ public class Test
           {
            switch(option)
            {
-                case '1': searchcar();
+                case '1': searchCase();
                         break;
                 case '2': addcar();
                         break;
@@ -119,7 +94,147 @@ public class Test
       
    }
 }
-   
+
+   private void searchCase() //validBlank and validDelSelection to valid case option are between (1) and (2)
+    {
+        Scanner input = new Scanner(System.in);
+         boolean exit = false;
+        while (!exit)
+       {
+        displaymenu2();        
+        String iobuffer = input.nextLine();
+        char option = ' '; 
+
+        while(validBlank(iobuffer.trim(),"Options"))
+            iobuffer = input.nextLine();
+
+        while(validDelSelection(convertStringtoInt(iobuffer.trim()), 5))
+        {
+            iobuffer = input.nextLine();
+            //validate Option is blank
+            while(validBlank(iobuffer.trim(),"Options"))    
+                iobuffer = input.nextLine();
+        }
+        option = iobuffer.charAt(0);
+
+        switch (option)
+        {
+            case '1':                        
+            //search car from the reg
+            searchcar();
+            break;
+
+            case '2':
+            searchbycarmm();
+            //search 
+            break; 
+            case '3':searchbyyear();
+                    break;
+            
+            case '4': searchbyprice();
+                        break;
+            case '5': exit = true;
+                      break;
+        }
+    }}
+    
+    private void searchbyyear()
+    {
+        System.out.println(" ");
+        System.out.println("=== Search Car by Year ===");
+        //input
+        Scanner input = new Scanner(System.in);
+        System.out.println("Search Car , please insert max age:");
+        String max = input.nextLine().toLowerCase();
+
+        while(validBlank(max,"Car Make"))
+            max = input.nextLine().toLowerCase();
+
+        int maxyear = 2017 - convertStringtoInt(max);
+
+        ArrayList<Car> resultList = newcarlist.searchbyyear(maxyear);
+        for (int j = 0 ; j < resultList.size() ; j++)
+        {
+            resultList.get(j).displaycarrecord();
+        }
+
+        if (resultList.size() == 0)
+            System.out.println("No matched result");
+    }
+    
+    private void searchbyprice()
+    {
+        System.out.println(" ");
+        System.out.println("=== Search Car by Price ===");
+        //input
+        Scanner input = new Scanner(System.in);
+        System.out.println("Search Car , please insert max price:");
+        String max = input.nextLine().toLowerCase();
+        Scanner input2 = new Scanner(System.in);
+        System.out.println("Search Car , please insert min price:");
+        String min = input2.nextLine().toLowerCase();
+
+        while(validBlank(max,"Car Make"))
+            max = input.nextLine().toLowerCase();
+        while(validBlank(min,"Car Model"))
+            min = input2.nextLine().toLowerCase();
+        int maxprice = convertStringtoInt(max);
+        int minprice = convertStringtoInt(min);
+        ArrayList<Car> resultList = newcarlist.searchbyprice(maxprice,minprice);
+        for (int j = 0 ; j < resultList.size() ; j++)
+        {
+            resultList.get(j).displaycarrecord();
+        }
+
+        if (resultList.size() == 0)
+            System.out.println("No matched result");
+    }
+    
+    private void searchbycarmm() //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    {
+        System.out.println(" ");
+        System.out.println("=== Search Car by Make ===");
+        //input
+        Scanner input = new Scanner(System.in);
+        System.out.println("Search Car , please insert a keyword to search by make:");
+        String newcarmake = input.nextLine().toLowerCase();
+        Scanner input2 = new Scanner(System.in);
+        System.out.println("Search Car , please insert a keyword to search by model:");
+        String newcarmodel = input2.nextLine().toLowerCase();
+
+        while(validBlank(newcarmake,"Car Make"))
+            newcarmake = input.nextLine().toLowerCase();
+        while(validBlank(newcarmodel,"Car Model"))
+            newcarmodel = input2.nextLine().toLowerCase();
+
+        //searchBymake()
+        ArrayList<Car> resultList = newcarlist.searchbymake(newcarmake);
+
+        //display Car details
+        if(newcarmodel == "any")
+        {
+        System.out.println("Search Result");
+        for (int j = 0 ; j < resultList.size() ; j++)
+        {
+            resultList.get(j).displaycarrecord();
+        }
+
+        if (resultList.size() == 0)
+            System.out.println("No matched result");
+       }
+       else
+       resultList = newcarlist.searchbymodel(newcarmodel);
+       System.out.println("Search Result");
+        for (int j = 0 ; j < resultList.size() ; j++)
+        {
+            resultList.get(j).displaycarrecord();
+        }
+
+        if (resultList.size() == 0)
+            System.out.println("No matched result");
+
+        }
+
    private void addcar()
   {
     Scanner input = new Scanner(System.in);
@@ -197,6 +312,12 @@ public class Test
        while (validBlank(deletecar,"registration number"))
             deletecar = input.nextLine().toLowerCase();
        ArrayList<Car> delResultList = newcarlist.searchcar(deletecar);
+       System.out.println("Search Result");
+        for (int j = 0 ; j < delResultList.size() ; j++)
+        {
+            System.out.print( (j + 1) + ") ");
+            delResultList.get(j).displaycarrecord();
+        }
        int size = delResultList.size();
        //判断是否在表中，先不写了
        if (size != 0)
@@ -210,12 +331,7 @@ public class Test
        
        
        
-       
-    
-    
-    
-    
-    
+
     private void searchcar()
     {
         Scanner input = new Scanner(System.in);
@@ -415,7 +531,7 @@ public class Test
   
   private void readFile()
     {
-        String filename = ("cars.txt");
+        String filename = ("usedcars.txt");
         String cars;
         Car loadFromFile;
         
@@ -500,7 +616,7 @@ public class Test
     
   private void writeFile()
     {
-        String filename = ("cars.txt");
+        String filename = ("usedcars.txt");
         String[] cars = new String[8];
         Scanner input = new Scanner(System.in);
         CarDatabase toWriteCarList = new CarDatabase();

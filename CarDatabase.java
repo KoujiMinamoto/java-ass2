@@ -111,6 +111,59 @@ public class CarDatabase
         
         return false;
    }
+    
+   public ArrayList<Car> searchbymake(String searchmake) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    {
+        ArrayList<Car> resultList = new ArrayList<Car>();
+        
+        for (int i = 0 ; i < getnumberofcars(); i++)
+        {
+            if(getCars().get(i).getcarmake().toLowerCase().contains(searchmake))
+                resultList.add(getCars().get(i));            
+        }
+                
+        return resultList;
+    }
+    
+    public ArrayList<Car> searchbyprice(int maxprice , int minprice) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    {
+        ArrayList<Car> resultList = new ArrayList<Car>();
+        
+        for (int i = 0 ; i < getnumberofcars(); i++)
+        {
+            if(getCars().get(i).getprice() >= minprice && getCars().get(i).getprice() <= maxprice)
+               resultList.add(getCars().get(i)); 
+        }
+                
+        return resultList;
+    }
+    
+    public ArrayList<Car> searchbyyear(int maxyear) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    {
+        ArrayList<Car> resultList = new ArrayList<Car>();
+        
+        for (int i = 0 ; i < getnumberofcars(); i++)
+        {
+            if(getCars().get(i).getyearmade() >= maxyear && getCars().get(i).getyearmade() <= 2017)
+               resultList.add(getCars().get(i)); 
+        }
+                
+        return resultList;
+    }
+   
+   public ArrayList<Car> searchbymodel(String searchmodel) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    {
+        ArrayList<Car> resultList = new ArrayList<Car>();
+        
+        for (int i = 0 ; i < getnumberofcars(); i++)
+        {
+            if(getCars().get(i).getcarmodel().toLowerCase().contains(searchmodel))
+                resultList.add(getCars().get(i));            
+        }
+                
+        return resultList;
+    }
+   
    public void displayallcars()
    {
        for (Car car : carlist)
