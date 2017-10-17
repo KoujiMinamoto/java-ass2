@@ -108,7 +108,7 @@ public class Test
         while(validBlank(iobuffer.trim(),"Options"))
             iobuffer = input.nextLine();
 
-        while(validDelSelection(convertStringtoInt(iobuffer.trim()), 5))
+        while(validDelSelection(convertStringtoInt(iobuffer.trim()), 6))
         {
             iobuffer = input.nextLine();
             //validate Option is blank
@@ -133,10 +133,43 @@ public class Test
             
             case '4': searchbyprice();
                         break;
-            case '5': exit = true;
+            case '5': searchbycolour();
+                        break;
+            case '6': exit = true;
                       break;
         }
     }}
+    
+    private void searchbycolour() //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    {
+        System.out.println(" ");
+        System.out.println("=== Search Car by Colour ===");
+        //input
+        Scanner input = new Scanner(System.in);
+        System.out.println("Search Car , please insert a keyword to search by colour:");
+        String newcolour = input.nextLine().toLowerCase();
+       
+        while(validBlank(newcolour,"Colour"))
+            newcolour = input.nextLine().toLowerCase();
+       
+
+        //searchBymake()
+        ArrayList<Car> resultList = newcarlist.searchbycolour(newcolour);
+
+        //display Car details
+
+        System.out.println("Search Result");
+        for (int j = 0 ; j < resultList.size() ; j++)
+        {
+            resultList.get(j).displaycarrecord();
+        }
+
+        if (resultList.size() == 0)
+            System.out.println("No matched result");
+       }
+       
+
+   
     
     private void searchbyyear()
     {
@@ -150,7 +183,7 @@ public class Test
         while(validBlank(max,"Car Make"))
             max = input.nextLine().toLowerCase();
 
-        int maxyear = 2017 - convertStringtoInt(max);
+        int maxyear = convertStringtoInt(max);
 
         ArrayList<Car> resultList = newcarlist.searchbyyear(maxyear);
         for (int j = 0 ; j < resultList.size() ; j++)

@@ -4,7 +4,7 @@ import java.io.*;
 public class CarDatabase
 {
    private ArrayList<Car> carlist;
-   
+   Calendar c = Calendar.getInstance();
    
    public CarDatabase()
    {
@@ -141,10 +141,10 @@ public class CarDatabase
     public ArrayList<Car> searchbyyear(int maxyear) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
     {
         ArrayList<Car> resultList = new ArrayList<Car>();
-        
+        int year = c.get(Calendar.YEAR);
         for (int i = 0 ; i < getnumberofcars(); i++)
         {
-            if(getCars().get(i).getyearmade() >= maxyear && getCars().get(i).getyearmade() <= 2017)
+            if(getCars().get(i).getyearmade() >= (year - maxyear) && getCars().get(i).getyearmade() <= year)
                resultList.add(getCars().get(i)); 
         }
                 
@@ -164,6 +164,19 @@ public class CarDatabase
         return resultList;
     }
    
+    public ArrayList<Car> searchbycolour(String searchcolour) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    {
+        ArrayList<Car> resultList = new ArrayList<Car>();
+        
+        for (int i = 0 ; i < getnumberofcars(); i++)
+        {
+            if(getCars().get(i).getc1().toLowerCase().contains(searchcolour)||getCars().get(i).getc2().toLowerCase().contains(searchcolour)||getCars().get(i).getc3().toLowerCase().contains(searchcolour))
+                resultList.add(getCars().get(i));            
+        }
+                
+        return resultList;
+    }
+    
    public void displayallcars()
    {
        for (Car car : carlist)
