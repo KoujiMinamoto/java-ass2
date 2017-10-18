@@ -4,7 +4,7 @@ import java.io.*;
 public class CarDatabase
 {
    private ArrayList<Car> carlist;
-   Calendar c = Calendar.getInstance();
+  
    
    public CarDatabase()
    {
@@ -138,10 +138,10 @@ public class CarDatabase
         return resultList;
     }
     
-    public ArrayList<Car> searchbyyear(int maxyear) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
+    public ArrayList<Car> searchbyyear(int maxyear,int year) //not case-sensitive source.toLowerCase().contains(target.toLowerCase())
     {
         ArrayList<Car> resultList = new ArrayList<Car>();
-        int year = c.get(Calendar.YEAR);
+        
         for (int i = 0 ; i < getnumberofcars(); i++)
         {
             if(getCars().get(i).getyearmade() >= (year - maxyear) && getCars().get(i).getyearmade() <= year)

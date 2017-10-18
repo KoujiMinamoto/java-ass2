@@ -5,7 +5,8 @@ public class Test
 {
   Car car = new Car();
   private CarDatabase newcarlist;
-  
+   Calendar c = Calendar.getInstance();
+   
      public void displaymenu()
    {
         System.out.println("Used Car Warehouse Database System");
@@ -27,7 +28,8 @@ public class Test
         System.out.println("(2) By Car Make and Car Model");
         System.out.println("(3) By Age");
         System.out.println("(4) By Price (range)");
-        System.out.println("(5) Back to Main Menu");
+        System.out.println("(5) By Colour");
+        System.out.println("(6) Back to Main Menu");
         System.out.println("====================================");
         System.out.println("Choose an option:");
    }
@@ -35,6 +37,7 @@ public class Test
   public Test()
   {
     newcarlist = new CarDatabase();
+    
     
   }
 
@@ -179,13 +182,31 @@ public class Test
         Scanner input = new Scanner(System.in);
         System.out.println("Search Car , please insert max age:");
         String max = input.nextLine().toLowerCase();
+        
 
-        while(validBlank(max,"Car Make"))
+        while(validBlanknumber(max))
             max = input.nextLine().toLowerCase();
+        System.out.println("Which year now?");    
+        System.out.println("1.enter it"); 
+        System.out.println("2.use system"); 
+        String iobuffer = input.nextLine();
+         
+        while(validBlanknumber(iobuffer))
+            iobuffer = input.nextLine();
+            int option =convertStringtoInt(iobuffer) ;
+        if(option == 1)
+        {
+        Scanner input2 = new Scanner(System.in);
+        System.out.println("Search Car , please insert year:");
+        String year1 = input.nextLine().toLowerCase();
+        while(validBlanknumber(max))
+            year1 = input.nextLine().toLowerCase();
+            int year = convertStringtoInt(year1);
+            int maxyear = convertStringtoInt(max);
+        
+        
 
-        int maxyear = convertStringtoInt(max);
-
-        ArrayList<Car> resultList = newcarlist.searchbyyear(maxyear);
+        ArrayList<Car> resultList = newcarlist.searchbyyear(maxyear,year);
         for (int j = 0 ; j < resultList.size() ; j++)
         {
             resultList.get(j).displaycarrecord();
@@ -193,6 +214,29 @@ public class Test
 
         if (resultList.size() == 0)
             System.out.println("No matched result");
+        }
+        else
+        if(option == 2)
+        {
+            int year = c.get(Calendar.YEAR);
+            int maxyear = convertStringtoInt(max);
+        
+        
+
+        ArrayList<Car> resultList = newcarlist.searchbyyear(maxyear,year);
+        for (int j = 0 ; j < resultList.size() ; j++)
+        {
+            resultList.get(j).displaycarrecord();
+        }
+
+        if (resultList.size() == 0)
+            System.out.println("No matched result");
+        }
+        else
+        System.out.println("please enter 1-2");
+        
+        
+        
     }
     
     private void searchbyprice()
@@ -207,9 +251,9 @@ public class Test
         System.out.println("Search Car , please insert min price:");
         String min = input2.nextLine().toLowerCase();
 
-        while(validBlank(max,"Car Make"))
+        while(validBlanknumber(max))
             max = input.nextLine().toLowerCase();
-        while(validBlank(min,"Car Model"))
+        while(validBlanknumber(min))
             min = input2.nextLine().toLowerCase();
         int maxprice = convertStringtoInt(max);
         int minprice = convertStringtoInt(min);
@@ -275,6 +319,7 @@ public class Test
     System.out.println("Please insert car registration number :");        
     String newcarname = input.nextLine();
     
+    
     while (validcarname(newcarname))
     newcarname = input.nextLine();
     while (validBlank(newcarname,"car name"))
@@ -313,13 +358,13 @@ public class Test
     
     System.out.println("Please insert car yearmade");
     String newcaryearmade = input.nextLine();
-    while (validBlank(newcaryearmade,"car yearmade"))
+    while (validBlanknumber(newcaryearmade))
     newcaryearmade = input.nextLine();
     int newcaryearmadeint = convertStringtoInt(newcaryearmade);
     
     System.out.println("Please insert car price");
     String newcarprice = input.nextLine();
-    while (validBlank(newcarprice,"car price"))
+    while (validBlanknumber(newcarprice))
     newcarprice = input.nextLine();
     int newcarpriceint = convertStringtoInt(newcarprice);
     
@@ -352,7 +397,6 @@ public class Test
             delResultList.get(j).displaycarrecord();
         }
        int size = delResultList.size();
-       //判断是否在表中，先不写了
        if (size != 0)
         {
  
@@ -388,10 +432,10 @@ public class Test
         private void editcar()
     {
         System.out.println("Edit Car :");        
-        //input
+      
         Scanner input = new Scanner(System.in);
 
-        //search by title
+      
         System.out.println("=== Search Car to edit : ===");
         System.out.println("Search Car , please insert registration number:");
 
@@ -402,7 +446,7 @@ public class Test
 
         ArrayList<Car> editResultList = newcarlist.searchcar(editKeyword);
 
-        //display Movie details
+      
         System.out.println("Search Result");
         for (int j = 0 ; j < editResultList.size() ; j++)
         {
@@ -475,18 +519,12 @@ public class Test
                 //input
                 String newprice = input.nextLine();
 
-                while (validBlank(newprice,"new price"))
+                while (validBlanknumber(newprice))
                     newprice = input.nextLine();
 
                 //Convert String newRating to int newRatingInt
                 int newpriceInt = convertStringtoInt(newprice);
 
-                //validRating(int rating)
-               
-                newprice = input.nextLine();
-
-                while(validBlank(newprice,"new price"))
-                newprice = input.nextLine();
 
                 newpriceInt = convertStringtoInt(newprice);
                
@@ -501,7 +539,7 @@ public class Test
             }
         }
         else
-            System.out.println("No matched movies");
+            System.out.println("No matched cars");
     }
     
    private int convertStringtoInt(String input) //method to convert String to Integer
@@ -540,26 +578,61 @@ public class Test
    
     private boolean validBlank(String iobuffer,String subject) //method to check insert any empties or blanks
     {
+            if (iobuffer.matches("[a-zA-Z_0-9]*"))
+            {
+                
         if (subject.equals("Option"))
         {
             //if iobuffer isEmpty or iobuffer.length() > 1 , Error : please insert from (1) to (5)! and return false to break if condition
             if (iobuffer.isEmpty() || iobuffer.length() > 1)
             {
-                System.out.println("Error : please insert from 1 to 5!");
+                System.out.println("Error : please insert from 1 to 6 !");
                 return false;
             }
             return true;
+        }
+        else
+        if ((subject.equals("car name")))
+        {
+            if (iobuffer.isEmpty() || iobuffer.length() > 6)
+            {
+                System.out.println("Error : please insert from 1 - 6 characters or number!");
+                return true;
+            }
+            return false;
         }
         else
         {    
             //iobuffer.trim().isEmpty(), "Error: subject's name shouldn't be blank! Please enter the name again:" and return true to keep while condition
             if (iobuffer.trim().isEmpty())
             {
-                System.out.println("Error: " + subject + " shouldn't be blank! Please enter the name again:");
+                System.out.println("Error: " + subject + " shouldn't be blank! Please enter again:");
                 return true;
             }
+            
         }
         return false;
+    }
+     System.out.println("Error: " + subject + " shouldn't be #!...Please enter again:");
+    return true;
+    }
+    
+    private boolean validBlanknumber(String iobuffer) //method to check insert any empties or blanks
+    {
+            if (iobuffer.matches("[a-zA-Z_0-9]*"))
+            {
+                
+        
+            if (iobuffer.trim().isEmpty())
+            {
+                System.out.println("Error:  shouldn't be blank! Please enter again:");
+                return true;
+            }
+            return false;
+        }
+       
+     System.out.println("Error:  shouldn't be #!...Please enter again:");
+    return true;
     }
   
   private void readFile()
@@ -579,25 +652,16 @@ public class Test
                 cars = parser.nextLine();
                 String[] attribute = cars.split(",");
 
-                for (int i = 0 ; i < attribute.length ; i++)
-                {
-                   System.out.println (attribute[i]);
-                
-                   //numbers of Movies
-                   //for (int k = 0 ; k < loadFromFile.getNumbersOfElements() ; k++)
-                   //{
-                   //attributes of Movies
-                   //}
-                }
+
 
                 System.out.println ("Car"+ linecount);
                 loadFromFile.setcarreg(attribute[0]);
-                loadFromFile.setcarmake(attribute[1]);
-                loadFromFile.setcarmodel(attribute[2]);
-                loadFromFile.setcolour1(attribute[3]); 
-                loadFromFile.setcolour2(attribute[4]);
-                loadFromFile.setcolour3(attribute[5]);
-                loadFromFile.setyearmade(convertStringtoInt(attribute[6]));
+                loadFromFile.setcarmake(attribute[5]);
+                loadFromFile.setcarmodel(attribute[6]);
+                loadFromFile.setcolour1(attribute[2]); 
+                loadFromFile.setcolour2(attribute[3]);
+                loadFromFile.setcolour3(attribute[4]);
+                loadFromFile.setyearmade(convertStringtoInt(attribute[1]));
                 loadFromFile.setprice(convertStringtoInt(attribute[7]));
                 
                 //add movie to the list
@@ -624,17 +688,22 @@ public class Test
 
     private boolean validSpace(String iobuffer) 
     {
-        
+        if (iobuffer.matches("[a-zA-Z_0-9]*"))
+            {
         if (iobuffer.isEmpty())
             return false;
         else if (iobuffer.charAt(0) == ' ')
         {
-            System.out.println("Error: colour1 or colour2's name shouldn't be space only or start by space character! Please enter the name again:");
+            System.out.println("Error: colour name should be space only or start by space character! Please enter again:");
             return true;
         }
         return false;
     }
+    System.out.println("Error: colour shouldn't be #!...Please enter again:");
+            return true;
+    } 
     
+
     private boolean validDelSelection(int index, int size) //method to check int index
     {
         //check if rating is from 1 to size  and return false to break while loop
@@ -645,6 +714,18 @@ public class Test
             return true;
         }
         return false;
+    }
+   
+    public static boolean isLetter(String str) 
+    {
+        String regex = "^[a-z0-9A-Z]+$";//其他需要，直接修改正则表达式就好
+        return str.matches(regex);
+    }
+    
+        public static boolean isNumber(String str) 
+    {
+        String regex = "^[0-9]+$";//其他需要，直接修改正则表达式就好
+        return str.matches(regex);
     }
     
   private void writeFile()
@@ -664,12 +745,12 @@ public class Test
             for (int i = 0 ; i < numberofcars ; i++ )
             {
             cars[0] = newcarlist.getCars().get(i).getcarreg();
-            cars[1] = newcarlist.getCars().get(i).getcarmake();
-            cars[2] = newcarlist.getCars().get(i).getcarmodel();
-            cars[3] = newcarlist.getCars().get(i).getc1();
-            cars[4] = newcarlist.getCars().get(i).getc2();
-            cars[5] = newcarlist.getCars().get(i).getc3();
-            cars[6] = newcarlist.getCars().get(i).getyearmade()+ ""; 
+            cars[5] = newcarlist.getCars().get(i).getcarmake();
+            cars[6] = newcarlist.getCars().get(i).getcarmodel();
+            cars[2] = newcarlist.getCars().get(i).getc1();
+            cars[3] = newcarlist.getCars().get(i).getc2();
+            cars[4] = newcarlist.getCars().get(i).getc3();
+            cars[1] = newcarlist.getCars().get(i).getyearmade()+ ""; 
             cars[7] = newcarlist.getCars().get(i).getprice() + ""; 
            
             for (int k = 0 ; k < 8 ; k++ )
