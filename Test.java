@@ -459,7 +459,7 @@ public class Test
         //selection
         if (size != 0)
         {
-            System.out.println("Please insert which option number you would select to delete, press 0 to quit :");
+            System.out.println("Please insert which option number you would select to edit, press 0 to quit :");
             String editcarselection = input.nextLine();
             int index = convertStringtoInt(editcarselection);
 
