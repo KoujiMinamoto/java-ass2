@@ -199,7 +199,7 @@ public class Test
         Scanner input2 = new Scanner(System.in);
         System.out.println("Search Car , please insert year:");
         String year1 = input.nextLine().toLowerCase();
-        while(validBlanknumber(max))
+        while(validBlanknumberyear(year1))
             year1 = input.nextLine().toLowerCase();
             int year = convertStringtoInt(year1);
             int maxyear = convertStringtoInt(max);
@@ -358,7 +358,7 @@ public class Test
     
     System.out.println("Please insert car yearmade");
     String newcaryearmade = input.nextLine();
-    while (validBlanknumber(newcaryearmade))
+    while (validBlanknumberyear(newcaryearmade))
     newcaryearmade = input.nextLine();
     int newcaryearmadeint = convertStringtoInt(newcaryearmade);
     
@@ -583,7 +583,7 @@ public class Test
                 
         if (subject.equals("Option"))
         {
-            //if iobuffer isEmpty or iobuffer.length() > 1 , Error : please insert from (1) to (5)! and return false to break if condition
+            //if iobuffer isEmpty or iobuffer.length() > 1 , Error : please insert from (1) to (6)! and return false to break if condition
             if (iobuffer.isEmpty() || iobuffer.length() > 1)
             {
                 System.out.println("Error : please insert from 1 to 6 !");
@@ -603,7 +603,6 @@ public class Test
         }
         else
         {    
-            //iobuffer.trim().isEmpty(), "Error: subject's name shouldn't be blank! Please enter the name again:" and return true to keep while condition
             if (iobuffer.trim().isEmpty())
             {
                 System.out.println("Error: " + subject + " shouldn't be blank! Please enter again:");
@@ -619,22 +618,28 @@ public class Test
     
     private boolean validBlanknumber(String iobuffer) //method to check insert any empties or blanks
     {
-            if (iobuffer.matches("[a-zA-Z_0-9]*"))
-            {
-                
-        
-            if (iobuffer.trim().isEmpty())
-            {
-                System.out.println("Error:  shouldn't be blank! Please enter again:");
-                return true;
-            }
+        if (iobuffer.matches("[0-9]*"))
+        {
             return false;
         }
-       
-     System.out.println("Error:  shouldn't be #!...Please enter again:");
-    return true;
+        System.out.println("Error:   should be number!...Please enter again:");
+        return true;
     }
-  
+    
+  private boolean validBlanknumberyear(String iobuffer) //method to check insert any empties or blanks
+    {
+         int yearnow = c.get(Calendar.YEAR);
+         if (iobuffer.matches("[0-9]*"))
+         {
+             if (convertStringtoInt(iobuffer) > yearnow)
+             {
+                System.out.println("Error:  year should be less than nowyear!...Please enter again:");
+             }
+            return false;
+         }
+         System.out.println("Error:   should be number!...Please enter again:");
+         return true;
+    }
   private void readFile()
     {
         String filename = ("usedcars.txt");
@@ -654,7 +659,7 @@ public class Test
 
 
 
-                System.out.println ("Car"+ linecount);
+                System.out.println ("Car"+ (linecount+1));
                 loadFromFile.setcarreg(attribute[0]);
                 loadFromFile.setcarmake(attribute[5]);
                 loadFromFile.setcarmodel(attribute[6]);
@@ -715,18 +720,7 @@ public class Test
         }
         return false;
     }
-   
-    public static boolean isLetter(String str) 
-    {
-        String regex = "^[a-z0-9A-Z]+$";//其他需要，直接修改正则表达式就好
-        return str.matches(regex);
-    }
-    
-        public static boolean isNumber(String str) 
-    {
-        String regex = "^[0-9]+$";//其他需要，直接修改正则表达式就好
-        return str.matches(regex);
-    }
+
     
   private void writeFile()
     {
