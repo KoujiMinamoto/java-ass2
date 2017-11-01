@@ -74,7 +74,7 @@ public class CarDatabase
         }        
         if (! isEdited)
         {
-            System.out.println(" No matched movies are Edited."); 
+            System.out.println(" No matched cars are Edited."); 
         }
     }
     
