@@ -21,7 +21,7 @@ public class Car
   
    public void displaycarrecord()
     {
-        //method to test displaying attributes of the movie
+        //method to test displaying attributes of the Car
         System.out.print(carreg + ",");
         System.out.print(carmake + ",");
         System.out.print(carmodel + ",");
